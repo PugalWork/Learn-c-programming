@@ -24,7 +24,7 @@ Node* reverse_list(Node *head) {
         return head;
     } 
     Node *newnode = reverse_list(head->next);
-    head->next->next = head;
+    head->next->next = head; //make the next node point to current node
     head->next = NULL;
 
     return newnode;
