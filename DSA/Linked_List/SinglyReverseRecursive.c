@@ -2,10 +2,10 @@
 #include<stdlib.h>
 
 void list_display();
-struct Node {
+typedef struct Node {
       int data;
       struct Node *next;
-};
+} Node;
 struct Node *head, *newnode, *temp;
 
 int count_elements() {
@@ -18,19 +18,16 @@ int count_elements() {
     return total_elements;
 }
 
-void reverse_list() {
-    struct Node *prevnode, *currentnode, *nextnode;
-    prevnode = NULL;
-    currentnode = nextnode = head;
-    while (currentnode != NULL) {
-           nextnode = currentnode->next; // save next
-	   currentnode->next = prevnode; //reverse link
-	   prevnode = currentnode; //move prev forward
-	   currentnode = nextnode; //move currentnode forward
+Node* reverse_list(Node *head) {
+    // Base Condition
+    if (head == NULL || head->next == NULL) {
+        return head;
     } 
-    head = prevnode;
-    printf("After reversing list:\n");
-    list_display();
+    Node *newnode = reverse_list(head->next);
+    head->next->next = head;
+    head->next = NULL;
+
+    return newnode;
 
 }
 
@@ -85,7 +82,8 @@ void list_free() {
 int main() {
     create_list();
     list_display();
-    reverse_list();
+    head = reverse_list(head);
+    list_display();
     list_free();
     return 0;	
 }

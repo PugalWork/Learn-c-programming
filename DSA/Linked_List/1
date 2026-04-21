@@ -8,6 +8,27 @@ struct Node {
 };
 struct Node *head, *newnode, *temp;
 
+int count_elements();
+
+void find_nth_node_from_end () {
+    int count = count_elements();
+    int n;
+    printf("enter nth node from end: ");
+    scanf("%d", &n);
+    //boundary checks
+    if (n <= 0 || n > count) {
+        printf("Enter the valid position!\n");
+	return;
+    }
+    int i = 0;
+    temp = head;
+    while (i < count - n) {
+        temp = temp->next;
+	i++;
+    }
+    printf("%d node from the end is %d\n", n, temp->data);
+}
+
 int count_elements() {
     int total_elements = 0;
     temp = head;
@@ -16,22 +37,6 @@ int count_elements() {
         total_elements++;
     }
     return total_elements;
-}
-
-void reverse_list() {
-    struct Node *prevnode, *currentnode, *nextnode;
-    prevnode = NULL;
-    currentnode = nextnode = head;
-    while (currentnode != NULL) {
-           nextnode = currentnode->next; // save next
-	   currentnode->next = prevnode; //reverse link
-	   prevnode = currentnode; //move prev forward
-	   currentnode = nextnode; //move currentnode forward
-    } 
-    head = prevnode;
-    printf("After reversing list:\n");
-    list_display();
-
 }
 
 void list_display() {
@@ -85,7 +90,7 @@ void list_free() {
 int main() {
     create_list();
     list_display();
-    reverse_list();
-    list_free();
+    find_nth_node_from_end();
+    list_free(); 
     return 0;	
 }
